@@ -3,7 +3,7 @@
 ## Prerequisites
 
 - Python 3.8+
-- Node.js 14+
+- Node.js 14+ (npm)
 - Docker (for Docker setup)
 
 
