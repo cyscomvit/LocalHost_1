@@ -30,12 +30,12 @@ from routes.csrf_routes import csrf_bp
 from routes.security_routes import security_bp
 from routes.session_routes import session_bp
 from utils.ldap_mock import ldap_bp
-from insecure_examples import examples_bp
+# from insecure_examples import examples_bp
 from routes.ctf_routes import ctf_bp
 from routes.academic_routes import academic_bp
 from routes.privesc_routes import privesc_bp
 from utils.ldap_mock import ldap_bp
-from insecure_examples import examples_bp
+# from insecure_examples import examples_bp
 try:
     from routes.cors_demo_routes import cors_demo_bp
 except Exception as e:
@@ -102,7 +102,7 @@ def create_app():
     app.register_blueprint(privesc_bp)
     app.register_blueprint(academic_bp) 
     app.register_blueprint(ldap_bp)
-    app.register_blueprint(examples_bp)
+    # app.register_blueprint(examples_bp)
     if cors_demo_bp:
         app.register_blueprint(cors_demo_bp)
     app.register_blueprint(broken_access_bp)
