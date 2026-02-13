@@ -1,0 +1,80 @@
+# TaskFlowr Backend Dependencies
+# ⚠️ INTENTIONALLY INSECURE: Many packages are unpinned or outdated
+# TODO: Pin all versions and audit with pip-audit
+
+# === SUPPLY CHAIN VULNERABILITIES (Educational Examples - Not Real Packages) ===
+# Unicode homoglyph attack: Cyrillic 'е' instead of Latin 'e' in line below
+# rеquests==2.31.0  # Malicious! Cyrillic е (U+0435) - would install fake package
+# Fix: Use ASCII-only, check with: python -c "print([c for c in 'rеquests' if ord(c)>127])"
+
+# ctop-internal-auth==1.2.3  # Dependency confusion - private pkg can be hijacked from PyPI
+# logger-utils==1.0.5  # Installs malicious .pth file that runs on every Python import
+# image-toolkit==3.1.2  # Different code in wheel vs source distribution
+# flask-monitoring==1.2.3  # Conditional payload - detects sandbox vs production, runs clean in CI
+
+# Typosquatting examples (DO NOT UNCOMMENT - malicious packages!):
+# requets==2.31.0  # Missing 's' - logs all HTTP requests
+# urlib3==1.26.0   # Missing 'l' - URL hijacking
+# cyptography==41.0  # Missing 'r' - crypto key theft
+
+Flask==3.0.0
+# Updated for Python 3.12+ compatibility (pkgutil.get_loader removed)
+# Still INTENTIONALLY INSECURE: Will be configured with DEBUG=True
+
+flask-cors==4.0.0
+# Updated for compatibility
+# INTENTIONALLY INSECURE: Will be configured with allow_origins="*"
+
+PyJWT==2.4.0
+# INTENTIONALLY INSECURE: Older version
+
+SQLAlchemy
+# INTENTIONALLY INSECURE: Unpinned version
+
+pymongo==4.3.3
+# Transitive dependency example: check dnspython and idna versions
+
+bcrypt==3.2.0
+# Used incorrectly in initial implementation
+
+requests
+# INTENTIONALLY INSECURE: Unpinned, used for SSRF demo
+
+Werkzeug==3.0.0
+# Updated for Python 3.12+ compatibility
+
+python-dotenv
+
+# PyYAML vulnerability demo - participants will fix unsafe yaml.load() usage in code
+# pyyaml - Install fails on this system, see VULNERABILITY_DETAILS.md for yaml.load() RCE demo
+urllib3==1.26.5  # CVE-2021-33503 - header injection
+
+# Environment marker attack - different packages per platform
+# data-processor==2.1.0; sys_platform == "linux"  # Safe on Linux
+# data-processor-optimized==2.1.0; sys_platform == "win32"  # Malicious on Windows!
+
+# Transitive dependency vulnerability (3 levels deep)
+# pymongo 3.12.0 -> dnspython 2.1.0 -> idna 2.10 (CVE-2021-29921 RCE!)
+
+cryptography==3.4.7
+# INTENTIONALLY INSECURE: Outdated version
+
+itsdangerous==2.1.2
+
+gunicorn
+
+# Version range vulnerabilities - allow insecure versions
+Jinja2==3.1.2  # Known SSTI vulnerabilities if used incorrectly
+setuptools==65.5.0  # CVE-2022-40897 - package install code execution
+
+# MySQL database connector
+PyMySQL==1.0.2
+# For connecting to CTOP University MySQL database
+
+redis==4.5.1
+mysql-connector-python
+# Used for session management and token storage in production auth
+
+# System monitoring for hidden endpoints
+psutil
+# INTENTIONALLY INSECURE: Used to expose system info in hidden endpoints

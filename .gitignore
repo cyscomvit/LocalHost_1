@@ -1,0 +1,56 @@
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+logs
+*.log
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Node modules (if running frontend locally)
+node_modules/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Environment files (except the intentional .env)
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build artifacts
+build/
+dist/
+
+# Coverage reports
+coverage/
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Docker volumes (if any)
+docker-data/

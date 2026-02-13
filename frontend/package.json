@@ -1,0 +1,50 @@
+{
+  "name": "taskflowr-frontend",
+  "version": "1.0.0",
+  "description": "TaskFlowr - Internal Task Management (INTENTIONALLY INSECURE)",
+  "private": true,
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.20.0",
+    "react-scripts": "5.0.1",
+    "lodash": "4.17.20",
+    "moment": "2.29.1",
+    "serialize-javascript": "3.1.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "_audit_command": "Run: npm audit --json > audit-report.json",
+    "_fix_command": "Run: npm audit fix (auto-fix non-breaking changes)",
+    "_force_fix": "Run: npm audit fix --force (may introduce breaking changes)",
+    "_check_outdated": "Run: npm outdated (shows available updates)",
+    "_verify_integrity": "Run: npm ls (check for missing/extraneous packages)"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "_security_notes": {
+    "_vulnerability_count": "🎯 Total vulnerabilities: 5+ direct, 10+ transitive",
+    "_challenge": "Can you identify ALL of them?",
+    "_tools": [
+      "npm audit",
+      "npm outdated",
+      "npm ls",
+      "Socket.dev",
+      "Snyk test"
+    ],
+    "_advanced_challenge": "Try to find the vulnerability 4 levels deep in the dependency tree!"
+  }
+}
